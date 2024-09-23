@@ -1,0 +1,183 @@
+<html><head><base href="https://annyflix.com/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AnnyFlix - Sua Plataforma de Streaming Favorita</title>
+<style>
+  body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #141414;
+    color: #ffffff;
+  }
+  .header {
+    background-color: #000000;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo {
+    color: #e50914;
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+  .nav a {
+    color: #ffffff;
+    text-decoration: none;
+    margin-left: 20px;
+  }
+  .hero {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.8) 100%), url('https://annyflix.com/hero-bg.jpg');
+    background-size: cover;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero-content {
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+  }
+  .cta-button {
+    background-color: #e50914;
+    color: #ffffff;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 50px;
+  }
+  .video-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 5px;
+    transition: transform 0.3s ease;
+  }
+  .video-item:hover {
+    transform: scale(1.05);
+  }
+  .video-item img {
+    width: 100%;
+    height: auto;
+  }
+  .video-item .play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0,0,0,0.7);
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .video-item:hover .play-button {
+    opacity: 1;
+  }
+  #video-player {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  #video-player video {
+    max-width: 90%;
+    max-height: 90%;
+  }
+  #close-player {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #ffffff;
+    font-size: 2rem;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">AnnyFlix</div>
+    <nav class="nav">
+      <a href="/browse">Navegar</a>
+      <a href="/mylist">Minha Lista</a>
+      <a href="/account">Conta</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Bem-vindo ao AnnyFlix</h1>
+      <p>Assista a filmes e séries incríveis, quando e onde quiser.</p>
+      <button class="cta-button">Comece a assistir</button>
+    </div>
+  </section>
+
+  <section class="video-grid">
+    <div class="video-item">
+      <img src="https://annyflix.com/thumbnail1.jpg" alt="Thumbnail de uma cena de ação com explosões ao fundo" width="200" height="300">
+      <div class="play-button" data-video="video1.mp4">Assistir</div>
+    </div>
+    <div class="video-item">
+      <img src="https://annyflix.com/thumbnail2.jpg" alt="Thumbnail de uma cena romântica em Paris" width="200" height="300">
+      <div class="play-button" data-video="video2.mp4">Assistir</div>
+    </div>
+    <div class="video-item">
+      <img src="https://annyflix.com/thumbnail3.jpg" alt="Thumbnail de uma cena de comédia com atores famosos" width="200" height="300">
+      <div class="play-button" data-video="video3.mp4">Assistir</div>
+    </div>
+    <div class="video-item">
+      <img src="https://annyflix.com/thumbnail4.jpg" alt="Thumbnail de uma cena de suspense em uma floresta escura" width="200" height="300">
+      <div class="play-button" data-video="video4.mp4">Assistir</div>
+    </div>
+  </section>
+
+  <div id="video-player">
+    <span id="close-player">&times;</span>
+    <video controls>
+      <source src="" type="video/mp4">
+      Seu navegador não suporta o elemento de vídeo.
+    </video>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const videoItems = document.querySelectorAll('.video-item');
+      const videoPlayer = document.getElementById('video-player');
+      const video = videoPlayer.querySelector('video');
+      const closePlayer = document.getElementById('close-player');
+
+      videoItems.forEach(item => {
+        const playButton = item.querySelector('.play-button');
+        playButton.addEventListener('click', function() {
+          const videoSrc = this.getAttribute('data-video');
+          video.src = 'https://annyflix.com/videos/' + videoSrc;
+          videoPlayer.style.display = 'flex';
+          video.play();
+        });
+      });
+
+      closePlayer.addEventListener('click', function() {
+        videoPlayer.style.display = 'none';
+        video.pause();
+        video.currentTime = 0;
+      });
+    });
+  </script>
+</body></html>
